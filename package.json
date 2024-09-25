@@ -1,14 +1,19 @@
 {
-  "name": "realworld_js",
+  "name": "pw",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test",
+    "debug": "npx playwright test --ui",
+    "gen" : "npx playwright codegen https://realworld.qa.guru/#/"
+  },
   "keywords": [],
-  "author": "",
+  "author": "telepnev",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@playwright/test": "^1.47.2",
-    "@types/node": "^22.7.0"
+    "@faker-js/faker": "^9.0.2",
+    "@playwright/test": "^1.47.0",
+    "@types/node": "^22.5.4"
   }
 }
