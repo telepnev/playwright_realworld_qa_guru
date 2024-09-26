@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker';
 import { randomInt } from 'crypto';
 
 
-test.describe.only('Article tests', () => {
+test.describe.skip('Article tests', () => {
     test('Create User', async ({ page }) => {
 
         class Animal {

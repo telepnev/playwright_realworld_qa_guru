@@ -1,17 +1,13 @@
 import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
+import { MainPage } from '../src/pages/main.page';
+
 
 let newUser;
 const URL = 'https://realworld.qa.guru/#/';
 
-/*
-telep
-mail23@mk.ri
-1234567
-*/
 
-
-test.describe.only('Login Users tests', () => {
+test.describe('Login Users tests', () => {
     test.beforeEach('Create User', async ({ page }) => {
          newUser = {
             userName : faker.person.firstName('male'),
@@ -29,8 +25,15 @@ test.describe.only('Login Users tests', () => {
       });
     
       test('Регистрация нового пользователя', async ({ page }) => {
-        await page.goto(URL);
-        await page.getByRole('link', { name: 'Sign up' }).click();
+
+       // await page.goto(URL);
+       // await page.getByRole('link', { name: 'Sign up' }).click();
+
+       const mainPage = new MainPage(page);
+       await mainPage.open(URL);
+       await mainPage.registr();
+
+
         await page.getByPlaceholder('Your Name').click();
         await page.getByPlaceholder('Your Name').fill(newUser.userName);
         await page.getByPlaceholder('Email').click();

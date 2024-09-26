@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 
 
-test.only('Создание новой статьи', async ({ }) => {
+test.skip('Создание новой статьи', async ({ }) => {
 
     let dog = {
         dogNaem : 'Stesha',
