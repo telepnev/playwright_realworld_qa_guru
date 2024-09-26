@@ -6,7 +6,7 @@ export class MainPage extends BasePage {
         this.signupButton = page.getByRole('link', { name: 'Sign up' });
     }
 
-    async registr() {
+    async goToRegister() {
         await this.signupButton.click();
     }
 }

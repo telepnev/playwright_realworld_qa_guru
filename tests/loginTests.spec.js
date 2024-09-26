@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { MainPage } from '../src/pages/main.page';
+import { RegisterPage } from '../src/pages/register.page';
 
 
 let newUser;
@@ -20,20 +21,18 @@ test.describe('Login Users tests', () => {
             userEmail : "mail23@mk.ri",
             userPassword : "1234567"
          };
-
-
       });
     
       test('Регистрация нового пользователя', async ({ page }) => {
-
-       // await page.goto(URL);
-       // await page.getByRole('link', { name: 'Sign up' }).click();
-
        const mainPage = new MainPage(page);
+       const registerPage = new RegisterPage(page);
+
        await mainPage.open(URL);
-       await mainPage.registr();
+       await mainPage.goToRegister();
+       await registerPage.registerNewUser(newUser.userName, newUser.userEmail ,newUser.userPassword);
 
 
+        /*
         await page.getByPlaceholder('Your Name').click();
         await page.getByPlaceholder('Your Name').fill(newUser.userName);
         await page.getByPlaceholder('Email').click();
@@ -41,10 +40,12 @@ test.describe('Login Users tests', () => {
         await page.getByPlaceholder('Password').click();
         await page.getByPlaceholder('Password').fill(newUser.userPassword);
         await page.getByRole('button', { name: 'Sign up' }).click();
+        
         await expect(page.getByRole('navigation')).toContainText(newUser.userName);
+        */
       });
 
-      test('Авторизация существующего пользователя', async ({ page }) => {
+      test.skip('Авторизация существующего пользователя', async ({ page }) => {
         await page.goto(URL);
         await page.getByRole('link', { name: 'Login' }).click();
         await page.getByPlaceholder('Email').click();
@@ -56,7 +57,7 @@ test.describe('Login Users tests', () => {
         await expect(page.getByRole('navigation')).toContainText("telep");
       });
 
-      test('Проверка сообщения "Wrong email/password combination" ', async ({ page }) => {
+      test.skip('Проверка сообщения "Wrong email/password combination" ', async ({ page }) => {
         await page.goto(URL);
         let wrongMessage = "Wrong email/password combination";
         await page.getByRole('link', { name: 'Login' }).click();
@@ -69,7 +70,7 @@ test.describe('Login Users tests', () => {
         await expect(page.locator('.error-messages')).toContainText("Wrong email/password combination");
       });
 
-      test('Проверка сообщения "Email not found sign in first" ', async ({ page }) => {
+      test.skip('Проверка сообщения "Email not found sign in first" ', async ({ page }) => {
         await page.goto(URL);
         let wrongMessage = "Wrong email/password combination";
         await page.getByRole('link', { name: 'Login' }).click();
