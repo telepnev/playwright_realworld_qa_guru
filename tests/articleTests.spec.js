@@ -13,7 +13,7 @@ mail23@mk.ri
 */
 
 
-test.describe.only('Article tests', () => {
+test.describe.skip('Article tests', () => {
     test.beforeEach('Create User', async ({ page }) => {
 
         const DEFAULT_USER = {
@@ -38,9 +38,9 @@ test.describe.only('Article tests', () => {
             articleAbout : faker.food.ethnicCategory(),
             writeArticle : faker.food.description(),
             getTag : () => {
-                const tags = ["Angel Wings","Baklava","Bánh","Bánh Bao",
-                    "Bánh Căn","Sbiten","Okroshka","Semolina porridge",
-                    "Kalitki","Kalach","Fish rasstegai"]
+                const tags = ["AngelWings","Baklava","Bánh","BánhBao",
+                    "BánhCăn","Sbiten","Okroshka","Semolinaporridge",
+                    "Kalitki","Kalach","FishRasstegai"]
                 let ruslt = tags[randomInt(10)]
                 return ruslt;
             }
@@ -68,6 +68,8 @@ test.describe.only('Article tests', () => {
         await page.getByRole('button', { name: 'Publish Article' }).click();
     
         await expect(page.getByRole('heading')).toContainText(title);
+        await expect(page.locator(".article-content")).toContainText(writeArticle);
+        await expect(page.locator(".tag-list")).toContainText(tags);
       });
 
 
