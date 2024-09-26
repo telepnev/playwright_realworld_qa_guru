@@ -6,13 +6,6 @@ import { randomInt } from 'crypto';
 const URL = 'https://realworld.qa.guru/#/';
 let articleHelper;
 
-/*
-telep
-mail23@mk.ri
-1234567
-*/
-
-
 test.describe.skip('Article tests', () => {
     test.beforeEach('Create User', async ({ page }) => {
 
