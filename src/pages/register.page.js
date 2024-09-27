@@ -1,6 +1,5 @@
 import { BasePage } from "./base.page";
 
-
 export class RegisterPage extends BasePage {
     constructor(page) {
         super(page);
@@ -19,8 +18,6 @@ export class RegisterPage extends BasePage {
         await this.passwordField.fill(userPassword);
         await this.signupButton.click();
     }
-
-
 
     // С разбиением на компоненты 
 

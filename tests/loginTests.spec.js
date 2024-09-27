@@ -4,11 +4,8 @@ import { MainPage } from '../src/pages/main.page';
 import { RegisterPage } from '../src/pages/register.page';
 import { LoginPage } from '../src/pages/login.page';
 
-
 let newUser;
 const URL = 'https://realworld.qa.guru/#/';
-
-
 
 test.describe('Login Users tests', () => {
     test.beforeEach('Create User', async ({ page }) => {
@@ -16,10 +13,6 @@ test.describe('Login Users tests', () => {
             userName : faker.person.firstName('male'),
             userEmail : faker.internet.email(),
             userPassword : faker.internet.password(8)
-         };
-
-         const superUser = {
-          
          };
       });
     
