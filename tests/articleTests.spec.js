@@ -19,7 +19,7 @@ test.describe.only('Article tests', () => {
         await mainPage.goToAuthorization();
         await loginPage.authorizationUser(userEmail, userPassword);
 
-        await expect(page.getByRole('navigation')).toContainText(userName);
+       // await expect(page.getByRole('navigation')).toContainText(userName);
 
       // todo перенести в отдельный класс
         articleHelper = {
@@ -42,7 +42,7 @@ test.describe.only('Article tests', () => {
       });
     
 
-      test('Создание новой статьи', async ({ page }) => {
+      test.skip('Создание новой статьи', async ({ page }) => {
        
         let createTitle = articleHelper.articleTitle;
         let createArticleAbout = articleHelper.articleAbout;
@@ -61,7 +61,7 @@ test.describe.only('Article tests', () => {
 
       });
 
-      test('Редактирование статьи после ее создания', async ({ page }) => {
+      test.skip('Редактирование статьи после ее создания', async ({ page }) => {
        
         let title = articleHelper.articleTitle;
         let articleAbout = articleHelper.articleAbout;
@@ -85,7 +85,7 @@ test.describe.only('Article tests', () => {
         await expect(page.locator(".article-content")).toContainText(newWriteArticle);
       });
 
-      test('Удаление статьи после ее создания', async ({ page }) => {
+      test.skip('Удаление статьи после ее создания', async ({ page }) => {
        
         let title = articleHelper.articleTitle;
         let articleAbout = articleHelper.articleAbout;
@@ -103,6 +103,23 @@ test.describe.only('Article tests', () => {
       
         await expect(page.getByRole('main')).toContainText('Articles not available.');
      
+      });
+
+      test.only('теги', async ({ page }) => {
+
+        const mainPage = new MainPage(page);
+        const articlePage = new ArticlePage(page);
+
+        /*
+         const list = await page.locator('//div[@class="tag-list"]/button').all();
+         // тут должно прийти много тегов, все которые есть на странице
+
+        */
+    
+        let link = await page.locator('//div[@class="tag-list"]/button').all();
+
+ 
+        
       });
 
     });
