@@ -19,4 +19,24 @@ export class RegisterPage extends BasePage {
         await this.passwordField.fill(userPassword);
         await this.signupButton.click();
     }
+
+
+
+    // С разбиением на компоненты 
+
+    async userNameClickAndFill (userName) {
+        await this.usernameField.click();
+        await this.usernameField.fill(userName);  
+    }
+    async userEmailClickAndFill (userEmail) {
+        await this.emailField.click();
+        await this.emailField.fill(userEmail);  
+    }
+    async userPasswordClickAndFill (userPassword) {
+        await this.passwordField.click();
+        await this.passwordField.fill(userPassword);  
+    }
+    async signupButtonClick (userPassword) {
+        await this.signupButton.click();;  
+    }
 }

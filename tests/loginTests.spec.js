@@ -2,10 +2,12 @@ import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { MainPage } from '../src/pages/main.page';
 import { RegisterPage } from '../src/pages/register.page';
+import { LoginPage } from '../src/pages/login.page';
 
 
 let newUser;
 const URL = 'https://realworld.qa.guru/#/';
+
 
 
 test.describe('Login Users tests', () => {
@@ -16,10 +18,8 @@ test.describe('Login Users tests', () => {
             userPassword : faker.internet.password(8)
          };
 
-         const USER = {
-            userName : "telep",
-            userEmail : "mail23@mk.ri",
-            userPassword : "1234567"
+         const superUser = {
+          
          };
       });
     
@@ -31,54 +31,48 @@ test.describe('Login Users tests', () => {
        await mainPage.goToRegister();
        await registerPage.registerNewUser(newUser.userName, newUser.userEmail ,newUser.userPassword);
 
+       await expect(page.locator('.dropdown')).toContainText(newUser.userName);
+      });
 
-        /*
-        await page.getByPlaceholder('Your Name').click();
-        await page.getByPlaceholder('Your Name').fill(newUser.userName);
-        await page.getByPlaceholder('Email').click();
-        await page.getByPlaceholder('Email').fill(newUser.userEmail);
-        await page.getByPlaceholder('Password').click();
-        await page.getByPlaceholder('Password').fill(newUser.userPassword);
-        await page.getByRole('button', { name: 'Sign up' }).click();
+      test('Авторизация существующего пользователя', async ({ page }) => {
+        let userName = "telep";
+        let userEmail = "mail23@mk.ri";
+        let userPassword = "1234567";
+        const mainPage = new MainPage(page);
+        const loginPage = new LoginPage(page);
         
-        await expect(page.getByRole('navigation')).toContainText(newUser.userName);
-        */
+
+        await mainPage.open(URL);
+        await mainPage.goToAuthorization();
+        await loginPage.authorizationUser(userEmail, userPassword);
+          
+        await expect(page.getByRole('navigation')).toContainText(userName);
       });
 
-      test.skip('Авторизация существующего пользователя', async ({ page }) => {
-        await page.goto(URL);
-        await page.getByRole('link', { name: 'Login' }).click();
-        await page.getByPlaceholder('Email').click();
-        await page.getByPlaceholder('Email').fill("mail23@mk.ri");
-        await page.getByPlaceholder('Password').click();
-        await page.getByPlaceholder('Password').fill("1234567");
-        await page.getByRole('button', { name: 'Login' }).click();
-
-        await expect(page.getByRole('navigation')).toContainText("telep");
-      });
-
-      test.skip('Проверка сообщения "Wrong email/password combination" ', async ({ page }) => {
-        await page.goto(URL);
+      test('Проверка сообщения "Wrong email/password combination" ', async ({ page }) => {
         let wrongMessage = "Wrong email/password combination";
-        await page.getByRole('link', { name: 'Login' }).click();
-        await page.getByPlaceholder('Email').click();
-        await page.getByPlaceholder('Email').fill("mail23@mk.ri");
-        await page.getByPlaceholder('Password').click();
-        await page.getByPlaceholder('Password').fill(newUser.userPassword);
-        await page.getByRole('button', { name: 'Login' }).click();
+        let userEmail = "mail23@mk.ri";
+        let userPassword = "123456798797979";
+        const mainPage = new MainPage(page);
+        const loginPage = new LoginPage(page);
+
+        await mainPage.open(URL);
+        await mainPage.goToAuthorization();
+        await loginPage.authorizationUser(userEmail, userPassword);
 
         await expect(page.locator('.error-messages')).toContainText("Wrong email/password combination");
       });
 
-      test.skip('Проверка сообщения "Email not found sign in first" ', async ({ page }) => {
-        await page.goto(URL);
+      test('Проверка сообщения "Email not found sign in first" ', async ({ page }) => {
         let wrongMessage = "Wrong email/password combination";
-        await page.getByRole('link', { name: 'Login' }).click();
-        await page.getByPlaceholder('Email').click();
-        await page.getByPlaceholder('Email').fill(newUser.userEmail);
-        await page.getByPlaceholder('Password').click();
-        await page.getByPlaceholder('Password').fill(newUser.userPassword);
-        await page.getByRole('button', { name: 'Login' }).click();
+        let userEmail = "mail23@mk1123123213123213131312.ri";
+        let userPassword = "123456798797979";
+        const mainPage = new MainPage(page);
+        const loginPage = new LoginPage(page);
+
+        await mainPage.open(URL);
+        await mainPage.goToAuthorization();
+        await loginPage.authorizationUser(userEmail, userPassword);
 
         await expect(page.locator('.error-messages')).toContainText("Email not found sign in first");
       });
