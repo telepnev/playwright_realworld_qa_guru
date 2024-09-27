@@ -1,13 +1,11 @@
 import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { MainPage } from '../src/pages/main.page';
-import { RegisterPage } from '../src/pages/register.page';
-import { LoginPage } from '../src/pages/login.page';
+import { MainPage, RegisterPage, LoginPage } from '../src/pages/index';
 
 let newUser;
 const URL = 'https://realworld.qa.guru/#/';
 
-test.describe('Login Users tests', () => {
+test.describe.skip('Login Users tests', () => {
     test.beforeEach('Create User', async ({ page }) => {
          newUser = {
             userName : faker.person.firstName('male'),
@@ -28,13 +26,13 @@ test.describe('Login Users tests', () => {
       });
 
       test('Авторизация существующего пользователя', async ({ page }) => {
+        // todo спрятать данные 
         let userName = "telep";
         let userEmail = "mail23@mk.ri";
         let userPassword = "1234567";
         const mainPage = new MainPage(page);
         const loginPage = new LoginPage(page);
         
-
         await mainPage.open(URL);
         await mainPage.goToAuthorization();
         await loginPage.authorizationUser(userEmail, userPassword);

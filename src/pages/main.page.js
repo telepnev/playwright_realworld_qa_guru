@@ -3,8 +3,9 @@ import { BasePage } from './base.page';
 export class MainPage extends BasePage {
     constructor(page) {
         super(page);
-        this.signupButton = page.getByRole('link', { name: 'Sign up' });
+        this.signupButton = this.page.getByRole('link', { name: 'Sign up' });
         this.loginButton = this.page.getByRole('link', { name: 'Login' });
+        this.newArticleButton = this.page.getByRole('link', { name: 'New Article' });
     }
 
     async goToRegister() {
@@ -14,5 +15,9 @@ export class MainPage extends BasePage {
     async goToAuthorization() {
         await this.loginButton.click();
 
+    }
+
+    async goToNewArticle() {
+        await this.newArticleButton.click();
     }
 }

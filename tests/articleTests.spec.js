@@ -1,31 +1,27 @@
 import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { randomInt } from 'crypto';
-
+import { MainPage, LoginPage, ArticlePage } from '../src/pages/index';
 
 const URL = 'https://realworld.qa.guru/#/';
 let articleHelper;
 
-test.describe.skip('Article tests', () => {
+test.describe.only('Article tests', () => {
     test.beforeEach('Create User', async ({ page }) => {
+      // todo перенести в отдельный класс
+        let userName = "telep";
+        let userEmail = "mail23@mk.ri";
+        let userPassword = "1234567";
+        const mainPage = new MainPage(page);
+        const loginPage = new LoginPage(page);
+        
+        await mainPage.open(URL);
+        await mainPage.goToAuthorization();
+        await loginPage.authorizationUser(userEmail, userPassword);
 
-        const DEFAULT_USER = {
-            userName : "telep",
-            userEmail : "mail23@mk.ri",
-            userPassword : "1234567"
-         };
-         
-        await page.goto(URL);
-        await page.getByRole('link', { name: 'Login' }).click();
-        await page.getByPlaceholder('Email').click();
-        await page.getByPlaceholder('Email').fill(DEFAULT_USER.userEmail);
-        await page.getByPlaceholder('Password').click();
-        await page.getByPlaceholder('Password').fill(DEFAULT_USER.userPassword);
-        await page.getByRole('button', { name: 'Login' }).click();
+        await expect(page.getByRole('navigation')).toContainText(userName);
 
-        await expect(page.getByRole('navigation')).toContainText("telep");
-
-
+      // todo перенести в отдельный класс
         articleHelper = {
             articleTitle : faker.food.dish(),
             articleAbout : faker.food.ethnicCategory(),
@@ -49,20 +45,16 @@ test.describe.skip('Article tests', () => {
         let writeArticle = articleHelper.writeArticle;
         let tags = articleHelper.getTag();
 
-        await page.getByRole('link', { name: 'New Article' }).click();
-        await page.getByPlaceholder('Article Title').click();
-        await page.getByPlaceholder('Article Title').fill(title);
-        await page.getByPlaceholder('What\'s this article about?').click();
-        await page.getByPlaceholder('What\'s this article about?').fill(articleAbout);
-        await page.getByPlaceholder('Write your article (in').click();
-        await page.getByPlaceholder('Write your article (in').fill(writeArticle);
-        await page.getByPlaceholder('Enter tags').click();
-        await page.getByPlaceholder('Enter tags').fill(tags);
-        await page.getByRole('button', { name: 'Publish Article' }).click();
-    
+        const mainPage = new MainPage(page);
+        const articlePage = new ArticlePage(page);
+
+        await mainPage.goToNewArticle();
+        await articlePage.createNewArticle(title, articleAbout, writeArticle, tags);
+
         await expect(page.getByRole('heading')).toContainText(title);
         await expect(page.locator(".article-content")).toContainText(writeArticle);
         await expect(page.locator(".tag-list")).toContainText(tags);
+
       });
 
 
