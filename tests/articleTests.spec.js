@@ -118,7 +118,7 @@ test.describe.only('Article tests', () => {
     
         let link = await page.locator('//div[@class="tag-list"]/button').all();
 
- 
+        просто не пойму как получить список элементов как это сделано в selenide
         
       });
 
