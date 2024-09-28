@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { randomInt } from 'crypto';
-import { MainPage, LoginPage, ArticlePage } from '../src/pages/index';
+import { MainPage, LoginPage, ArticlePage, ProfilePage} from '../src/pages/index';
 
 
 const URL = 'https://realworld.qa.guru/#/';
@@ -117,5 +117,41 @@ test.describe('Article tests', () => {
         await expect(page.getByText(articleTitleText)).toBeVisible();   
    
       });
+
+      test('Добавление пользователя в избранное', async ({ page }) => {
+        const tag = 'реклама';
+        const mainPage = new MainPage(page);
+        const profilePage = new ProfilePage(page);
+
+        await mainPage.goToHome();
+        await mainPage.getTagByName(tag);
+        await mainPage.clickOnAuthorButton();
+        await profilePage.toFollow();
+
+        await expect(page.getByText(' Unfollow ')).toBeVisible();   
+   
+      });
+
+      test('Пользователь может оставить коментарий к статье', async ({ page }) => {
+        const tag = 'реклама';
+        const commitMesege = articleHelper.writeArticle;
+        const mainPage = new MainPage(page);
+        const profilePage = new ProfilePage(page)
+
+        await mainPage.goToHome();
+        await mainPage.getTagByName(tag);
+        await mainPage.clickOnAuthorButton();
+
+        //await page.locator('//a[@class="author"]').click();
+        await page.locator('.preview-link').click();
+        
+        await page.getByPlaceholder('Write a comment...').click();
+        await page.getByPlaceholder('Write a comment...').fill(commitMesege);
+        await page.getByRole('button', { name : 'Post Comment'}).click()
+
+        await expect(page.locator('.row').nth(1)).toContainText(commitMesege);
+   
+      });
+      
 
     });

@@ -6,7 +6,8 @@ export class MainPage extends BasePage {
         this.signupButton = this.page.getByRole('link', { name: 'Sign up' });
         this.loginButton = this.page.getByRole('link', { name: 'Login' });
         this.newArticleButton = this.page.getByRole('link', { name: 'New Article' });
-        this.homeButton = this.page.getByRole('link', { name: 'Home' });     
+        this.homeButton = this.page.getByRole('link', { name: 'Home' }); 
+        this.authorButton = this.page.locator('//a[@class="author"]');    
     }
 
     async goToRegister() {
@@ -30,5 +31,8 @@ export class MainPage extends BasePage {
         await this.page.getByRole('button', { name: tag }).click();
       }
     
+    async clickOnAuthorButton() {
+        await this.authorButton.click();
+    }
 
 }
