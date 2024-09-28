@@ -12,7 +12,6 @@ export class ArticlePage extends BasePage{
         this.deleteArticleButton = this.page.getByRole('button', { name: 'Delete Article' }).first();
         this.editArticleButton = this.page.getByRole('button', { name: ' Edit Article' }).first();
         this.updateArticleButton = this.page.getByRole('button', { name: ' Update Article' });
-        
 
     }
 

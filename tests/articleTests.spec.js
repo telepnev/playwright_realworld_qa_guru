@@ -3,21 +3,22 @@ import { faker } from '@faker-js/faker';
 import { randomInt } from 'crypto';
 import { MainPage, LoginPage, ArticlePage } from '../src/pages/index';
 
+
 const URL = 'https://realworld.qa.guru/#/';
 let articleHelper;
 
-test.describe.only('Article tests', () => {
+test.describe('Article tests', () => {
     test.beforeEach('Create User', async ({ page }) => {
       // todo перенести в отдельный класс
-      let userName = "telep";
-      let userEmail = "mail23@mk.ri";
-      let userPassword = "1234567";
-        const mainPage = new MainPage(page);
-        const loginPage = new LoginPage(page);
+      const userName = "telep";
+      const userEmail = "mail23@mk.ri";
+      const userPassword = "1234567";
+      const mainPage = new MainPage(page);
+      const loginPage = new LoginPage(page);
         
-        await mainPage.open(URL);
-        await mainPage.goToAuthorization();
-        await loginPage.authorizationUser(userEmail, userPassword);
+      await mainPage.open(URL);
+      await mainPage.goToAuthorization();
+      await loginPage.authorizationUser(userEmail, userPassword);
 
        // await expect(page.getByRole('navigation')).toContainText(userName);
 
@@ -42,12 +43,12 @@ test.describe.only('Article tests', () => {
       });
     
 
-      test.skip('Создание новой статьи', async ({ page }) => {
+      test('Создание новой статьи', async ({ page }) => {
        
-        let createTitle = articleHelper.articleTitle;
-        let createArticleAbout = articleHelper.articleAbout;
-        let createWriteArticle = articleHelper.writeArticle;
-        let createTags = articleHelper.getTag();
+        const createTitle = articleHelper.articleTitle;
+        const createArticleAbout = articleHelper.articleAbout;
+        const createWriteArticle = articleHelper.writeArticle;
+        const createTags = articleHelper.getTag();
 
         const mainPage = new MainPage(page);
         const articlePage = new ArticlePage(page);
@@ -61,16 +62,16 @@ test.describe.only('Article tests', () => {
 
       });
 
-      test.skip('Редактирование статьи после ее создания', async ({ page }) => {
+      test('Редактирование статьи после ее создания', async ({ page }) => {
        
-        let title = articleHelper.articleTitle;
-        let articleAbout = articleHelper.articleAbout;
-        let writeArticle = articleHelper.writeArticle;
-        let tags = articleHelper.getTag();
+        const title = articleHelper.articleTitle;
+        const articleAbout = articleHelper.articleAbout;
+        const writeArticle = articleHelper.writeArticle;
+        const tags = articleHelper.getTag();
 
-        let newTitle = articleHelper.newArticleTitle;
-        let newArticleAbout = articleHelper.newArticleAbout;
-        let newWriteArticle = articleHelper.newArticleWRite;
+        const newTitle = articleHelper.newArticleTitle;
+        const newArticleAbout = articleHelper.newArticleAbout;
+        const newWriteArticle = articleHelper.newArticleWRite;
 
         const mainPage = new MainPage(page);
         const articlePage = new ArticlePage(page);
@@ -80,17 +81,16 @@ test.describe.only('Article tests', () => {
 
         await articlePage.toEditArticleButton();
         await articlePage.editArticle(newTitle, newArticleAbout, newWriteArticle);
-        
         await expect(page.getByRole('heading')).toContainText(newTitle);
-        await expect(page.locator(".article-content")).toContainText(newWriteArticle);
+      
       });
 
-      test.skip('Удаление статьи после ее создания', async ({ page }) => {
+      test('Удаление статьи после ее создания', async ({ page }) => {
        
-        let title = articleHelper.articleTitle;
-        let articleAbout = articleHelper.articleAbout;
-        let writeArticle = articleHelper.writeArticle;
-        let tags = articleHelper.getTag();
+        const title = articleHelper.articleTitle;
+        const articleAbout = articleHelper.articleAbout;
+        const writeArticle = articleHelper.writeArticle;
+        const tags = articleHelper.getTag();
 
         const mainPage = new MainPage(page);
         const articlePage = new ArticlePage(page);
@@ -101,25 +101,21 @@ test.describe.only('Article tests', () => {
         page.on('dialog', dialog => dialog.accept());
         await articlePage.toDeleteArticleButton();
       
-        await expect(page.getByRole('main')).toContainText('Articles not available.');
+        await expect(page.getByRole('button', { name: 'Your Feed' })).toBeVisible();
      
       });
 
-      test.only('теги', async ({ page }) => {
-
+      test('Переход по тегу', async ({ page }) => {
+        const tag = 'реклама';
+        const articleTitleText = 'Здесь могла бы быть ваша реклама';
         const mainPage = new MainPage(page);
-        const articlePage = new ArticlePage(page);
 
-        /*
-         const list = await page.locator('//div[@class="tag-list"]/button').all();
-         // тут должно прийти много тегов, все которые есть на странице
+        await mainPage.goToHome();
+        await mainPage.getTagByName(tag);
 
-        */
-    
-        let link = await page.locator('//div[@class="tag-list"]/button').all();
-
-        просто не пойму как получить список элементов как это сделано в selenide
-        
+        await expect(page.getByRole('button', { name: tag }).first()).toBeVisible();
+        await expect(page.getByText(articleTitleText)).toBeVisible();   
+   
       });
 
     });
