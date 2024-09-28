@@ -12,6 +12,8 @@ export class ArticlePage extends BasePage{
         this.deleteArticleButton = this.page.getByRole('button', { name: 'Delete Article' }).first();
         this.editArticleButton = this.page.getByRole('button', { name: ' Edit Article' }).first();
         this.updateArticleButton = this.page.getByRole('button', { name: ' Update Article' });
+        this.commentField = this.page.getByPlaceholder('Write a comment...');
+        this.postComment = this.page.getByRole('button', { name : 'Post Comment'});
 
     }
 
@@ -62,5 +64,10 @@ export class ArticlePage extends BasePage{
           });
     }
 
+    async leaveComment(textComment) {
+        await this.commentField.click();
+        await this.commentField.fill(textComment);
+        await this.postComment.click();
+    }
     
 }

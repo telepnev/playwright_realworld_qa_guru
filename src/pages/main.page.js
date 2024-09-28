@@ -7,7 +7,7 @@ export class MainPage extends BasePage {
         this.loginButton = this.page.getByRole('link', { name: 'Login' });
         this.newArticleButton = this.page.getByRole('link', { name: 'New Article' });
         this.homeButton = this.page.getByRole('link', { name: 'Home' }); 
-        this.authorButton = this.page.locator('//a[@class="author"]');    
+        this.authorButton = this.page.locator('//a[@class="author"]').first();    
     }
 
     async goToRegister() {

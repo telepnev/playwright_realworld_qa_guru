@@ -136,21 +136,17 @@ test.describe('Article tests', () => {
         const tag = 'реклама';
         const commitMesege = articleHelper.writeArticle;
         const mainPage = new MainPage(page);
-        const profilePage = new ProfilePage(page)
+        const profilePage = new ProfilePage(page);
+        const articlePage = new ArticlePage(page);
 
         await mainPage.goToHome();
         await mainPage.getTagByName(tag);
         await mainPage.clickOnAuthorButton();
-
-        //await page.locator('//a[@class="author"]').click();
-        await page.locator('.preview-link').click();
-        
-        await page.getByPlaceholder('Write a comment...').click();
-        await page.getByPlaceholder('Write a comment...').fill(commitMesege);
-        await page.getByRole('button', { name : 'Post Comment'}).click()
+        await profilePage.selectAnArticle();
+        await articlePage.leaveComment(commitMesege);
 
         await expect(page.locator('.row').nth(1)).toContainText(commitMesege);
-   
+  
       });
       
 
