@@ -1,4 +1,5 @@
 import { BasePage } from "./base.page";
+import { allure } from "allure-playwright";
 
 export class RegisterPage extends BasePage {
     constructor(page) {
@@ -10,6 +11,7 @@ export class RegisterPage extends BasePage {
     }
 
     async registerNewUser (userName, userEmail, userPassword) {
+        await allure.step("Вводим Имя пользователя, Email, Password", async () => {
         await this.usernameField.click();
         await this.usernameField.fill(userName);
         await this.emailField.click();
@@ -17,6 +19,7 @@ export class RegisterPage extends BasePage {
         await this.passwordField.click();
         await this.passwordField.fill(userPassword);
         await this.signupButton.click();
+        });
     }
 
     // С разбиением на компоненты 

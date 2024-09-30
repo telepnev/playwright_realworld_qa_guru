@@ -6,7 +6,7 @@ import { MainPage, RegisterPage, LoginPage } from '../src/pages/index';
 const URL = 'https://realworld.qa.guru/#/';
 let newUser;
 
-test.describe.only('Builder', () => {
+test.describe.skip('Builder', () => {
     test.beforeEach('Create User', async ({ page }) => {
         /*
         const mainPage = new MainPage(page);

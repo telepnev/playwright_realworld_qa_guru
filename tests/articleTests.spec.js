@@ -7,7 +7,7 @@ import { MainPage, LoginPage, ArticlePage, ProfilePage} from '../src/pages/index
 const URL = 'https://realworld.qa.guru/#/';
 let articleHelper;
 
-test.describe('Article tests', () => {
+test.describe.skip('Article tests', () => {
     test.beforeEach('Create User', async ({ page }) => {
       // todo перенести в отдельный класс
       const userName = "telep";

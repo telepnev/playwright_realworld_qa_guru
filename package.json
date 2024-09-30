@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "allureGenerate": "allure generate --clean",
+    "allureOpen": "allure open",
     "test": "npx playwright test",
     "debug": "npx playwright test --ui",
-    "gen" : "npx playwright codegen https://realworld.qa.guru/#/"
+    "gen": "npx playwright codegen https://realworld.qa.guru/#/"
   },
   "keywords": [],
   "author": "telepnev",
@@ -14,6 +16,9 @@
   "devDependencies": {
     "@faker-js/faker": "^9.0.2",
     "@playwright/test": "^1.47.0",
-    "@types/node": "^22.5.4"
+    "@types/node": "^22.5.4",
+    "allure-commandline": "^2.30.0",
+    "allure-playwright": "^3.0.3",
+    "os": "^0.1.2"
   }
 }
