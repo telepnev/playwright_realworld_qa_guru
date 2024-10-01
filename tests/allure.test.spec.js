@@ -107,6 +107,9 @@ test.describe.only('Login Users tests', () => {
       test('гиттт', async ({ page }) => {
         // прсото для ветки
       });
+      test('гиттт', async ({ page }) => {
+        // прсото для ветки
+      });
 
 
 
