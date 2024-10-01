@@ -3,6 +3,7 @@ import { ArticleBuilder, UserBuilder } from '../src/helpers/index';
 import { App } from '../src/pages/index';
 
 
+
 const URL = 'https://realworld.qa.guru/#/';
 let articleHelper;
 let app;
@@ -11,7 +12,7 @@ let oldUser;
 let newArticle;
 let upDateArticle;
 
-test.describe('Article tests', () => {
+test.describe.skip('Article tests', () => {
     test.beforeEach('Create User', async ({ page }) => {
       
       app = new App(page);

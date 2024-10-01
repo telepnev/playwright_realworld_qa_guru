@@ -1,7 +1,0 @@
-{
-  userName: 'Earnest',
-  userEmail: 'Lindsey_Ward@hotmail.com',
-  userPassword: 'zDoe3rgF_m7xL8F',
-  userPasswordFail: undefined,
-  UserBio: undefined
-}
