@@ -44,11 +44,11 @@ test.describe('Login Users tests', () => {
         await app.mainPage.goToAuthorization();
         await app.loginPage.authorizationUser(userEmail, userPassword);
 
-        await expect(page.locator('.error-messages')).toContainText("Wrong email/password combination");
+        await expect(page.locator('.error-messages')).toContainText(wrongMessage);
       });
 
       test('Проверка сообщения "Email not found sign in first" ', async ({ page }) => {
-        let wrongMessage = "Wrong email/password combination";
+        let wrongMessage = "Email not found sign in first";
         let userEmail = newUser.userEmail;
         let userPassword = newUser.userPassword;
 
@@ -56,6 +56,6 @@ test.describe('Login Users tests', () => {
         await app.mainPage.goToAuthorization();
         await app.loginPage.authorizationUser(userEmail, userPassword);
 
-        await expect(page.locator('.error-messages')).toContainText("Email not found sign in first");
+        await expect(page.locator('.error-messages')).toContainText(wrongMessage);
       });
     });
