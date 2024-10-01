@@ -57,19 +57,12 @@ test.describe('Article tests', () => {
 
       test('Удаление статьи после ее создания', async ({ page }) => {
        
-        const title = articleHelper.articleTitle;
-        const articleAbout = articleHelper.articleAbout;
-        const writeArticle = articleHelper.writeArticle;
-        const tags = articleHelper.getTag();
+        await app.mainPage.goToNewArticle();
+        await app.articlePage.createArticle(newArticle.articleTitle, newArticle.articleAbout,
+           newArticle.writeArticle, newArticle.tags);
 
-        const mainPage = new MainPage(page);
-        const articlePage = new ArticlePage(page);
-
-        await mainPage.goToNewArticle();
-        await articlePage.createArticle(title, articleAbout, writeArticle, tags);
-
-        page.on('dialog', dialog => dialog.accept());
-        await articlePage.toDeleteArticleButton();
+        await app.articlePage.confirmDeletionArticle()
+        await app.articlePage.toDeleteArticleButton();
       
         await expect(page.getByRole('button', { name: 'Your Feed' })).toBeVisible();
      
@@ -78,10 +71,9 @@ test.describe('Article tests', () => {
       test('Переход по тегу', async ({ page }) => {
         const tag = 'реклама';
         const articleTitleText = 'Здесь могла бы быть ваша реклама';
-        const mainPage = new MainPage(page);
 
-        await mainPage.goToHome();
-        await mainPage.getTagByName(tag);
+        await app.mainPage.goToHome();
+        await app.mainPage.getTagByName(tag);
 
         await expect(page.getByRole('button', { name: tag }).first()).toBeVisible();
         await expect(page.getByText(articleTitleText)).toBeVisible();   
@@ -90,13 +82,11 @@ test.describe('Article tests', () => {
 
       test('Добавление пользователя в избранное', async ({ page }) => {
         const tag = 'реклама';
-        const mainPage = new MainPage(page);
-        const profilePage = new ProfilePage(page);
 
-        await mainPage.goToHome();
-        await mainPage.getTagByName(tag);
-        await mainPage.clickOnAuthorButton();
-        await profilePage.toFollow();
+        await app.mainPage.goToHome();
+        await app.mainPage.getTagByName(tag);
+        await app.mainPage.clickOnAuthorButton();
+        await app.profilePage.toFollow();
 
         await expect(page.getByText(' Unfollow ')).toBeVisible();   
    
@@ -104,46 +94,20 @@ test.describe('Article tests', () => {
 
       test('Пользователь может оставить коментарий к статье', async ({ page }) => {
         const tag = 'реклама';
-        const commitMesege = articleHelper.writeArticle;
-        const mainPage = new MainPage(page);
-        const profilePage = new ProfilePage(page)
-
-        await mainPage.goToHome();
-        await mainPage.getTagByName(tag);
-        await mainPage.clickOnAuthorButton();
-
-        //await page.locator('//a[@class="author"]').click();
-        await page.locator('.preview-link').click();
-        
-        await page.getByPlaceholder('Write a comment...').click();
-        await page.getByPlaceholder('Write a comment...').fill(commitMesege);
-        await page.getByRole('button', { name : 'Post Comment'}).click()
-
-        await expect(page.locator('.row').nth(1)).toContainText(commitMesege);
-   
-      });
-
-
-      test('удалить после слияния', async ({ page }) => {
-        const tag = 'реклама';
-        const commitMesege = articleHelper.writeArticle;
-        const mainPage = new MainPage(page);
-        const profilePage = new ProfilePage(page)
-
-        await mainPage.goToHome();
-        await mainPage.getTagByName(tag);
-        await mainPage.clickOnAuthorButton();
-
-        //await page.locator('//a[@class="author"]').click();
-        await page.locator('.preview-link').click();
-        
-        await page.getByPlaceholder('Write a comment...').click();
-        await page.getByPlaceholder('Write a comment...').fill(commitMesege);
-        await page.getByRole('button', { name : 'Post Comment'}).click()
-
-        await expect(page.locator('.row').nth(1)).toContainText(commitMesege);
-   
-      });
+        const commitMesege = newArticle.articleAbout;
+    
+        await app.mainPage.goToHome();
+        await app.mainPage.getTagByName(tag);
+        await app.mainPage.clickOnAuthorButton();
       
+        await page.locator('.preview-link').click();
+        
+        await page.getByPlaceholder('Write a comment...').click();
+        await page.getByPlaceholder('Write a comment...').fill(commitMesege);
+        await page.getByRole('button', { name : 'Post Comment'}).click()
+
+        await expect(page.locator('.row').nth(1)).toContainText(commitMesege);
+   
+      });
 
     });

@@ -56,11 +56,10 @@ export class ArticlePage extends BasePage{
     }
 
     async confirmDeletionArticle() {
-            this.page.once('dialog', dialog => {
-            console.log(`Dialog message: ${dialog.message()}`);
-            dialog.dismiss().catch(() => {});
-          });
+         await this.page.on('dialog', dialog => dialog.accept());
+      
     }
 
+    
     
 }
