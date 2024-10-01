@@ -1,0 +1,7 @@
+{
+  userName: 'Stewart',
+  userEmail: 'Santiago3@gmail.com',
+  userPassword: 'VjI4Mkg6abbXJQd',
+  userPasswordFail: undefined,
+  UserBio: undefined
+}

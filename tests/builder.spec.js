@@ -6,17 +6,10 @@ import { MainPage, RegisterPage, LoginPage } from '../src/pages/index';
 const URL = 'https://realworld.qa.guru/#/';
 let newUser;
 
-test.describe.skip('Builder', () => {
+test.describe('Builder', () => {
     test.beforeEach('Create User', async ({ page }) => {
-        /*
-        const mainPage = new MainPage(page);
-        const registerPage = new RegisterPage(page);
-        newUser = new UserBuilder().addName().addEmail().addUserPassword().generate();
-
-        await mainPage.open(URL);
-        await mainPage.goToRegister();
-        await registerPage.registerNewUser(newUser.userName, newUser.userEmail ,newUser.userPassword);
-        */
+        newUser = new UserBuilder().addName().addEmail().addUserPassword()
+        .addEmailSuperUser().addPasswordSuperUser().addNameSuperUser().generate();
        
       });
   
@@ -25,7 +18,7 @@ test.describe.skip('Builder', () => {
        const mainPage = new MainPage(page);
        const registerPage = new RegisterPage(page);
 
-       newUser = new UserBuilder().addName().addEmail().addUserPassword().generate();
+      // newUser = new UserBuilder().addName().addEmail().addUserPassword().addEmailSuperUser().generate();
 
        await mainPage.open(URL);
        await mainPage.goToRegister();
@@ -33,4 +26,12 @@ test.describe.skip('Builder', () => {
 
        await expect(page.locator('.dropdown')).toContainText(newUser.userName);
       });
+
+
+      test('Super user', async ({ page }) => {
+        console.log(newUser.emailSuperUser);
+        console.log(newUser.passwordSuperUser);
+        console.log(newUser.nameSuperUser);
+        
+       });
     });

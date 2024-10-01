@@ -22,13 +22,31 @@ export class UserBuilder {
         return this;
     }
 
+    addEmailSuperUser() {
+        this.emailSuperUser = 'evgen@telepnev.mail';
+        return this;
+    }
+
+    addPasswordSuperUser() {
+        this.passwordSuperUser = 'qwerty123';
+        return this;
+    }
+    addNameSuperUser() {
+        this.nameSuperUser = 'EvgenTe';
+        return this;
+    }
+
     generate() {
         const copied = structuredClone ({
             userName : this.userName,
             userEmail : this.userEmail,
             userPassword : this.userPassword,
             userPasswordFail : this.userPasswordFail,
-            UserBio : this.UserBio
+            UserBio : this.UserBio,
+            emailSuperUser : this.emailSuperUser,
+            passwordSuperUser : this.passwordSuperUser,
+            nameSuperUser : this.nameSuperUser
+
         });
          return copied;
     }

@@ -2,19 +2,19 @@ import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { UserBuilder } from '../src/helpers/index';
 import { App } from '../src/pages/index';
-//import { MainPage, RegisterPage, LoginPage } from '../src/pages/index';
+
 //todo  url вынести в конфиг или в окружение
 const URL = 'https://realworld.qa.guru/#/';
 let newUser;
 let app;
 
 
-test.describe.skip('Login Users tests', () => {
+test.describe('Login Users tests', () => {
     test.beforeEach('Create User', async ({ page }) => {
-    /*
+  
       app = new App(page);
       newUser = new UserBuilder().addName().addEmail().addUserPassword().generate();
-
+  /*
       await app.mainPage.open(URL);
       await app.mainPage.goToRegister();
       await app.registerPage.registerNewUser(newUser.userName, newUser.userEmail ,newUser.userPassword);
@@ -35,9 +35,9 @@ test.describe.skip('Login Users tests', () => {
       test('Авторизация существующего пользователя', async ({ page }) => {
         app = new App(page);
         // todo спрятать данные 
-        let userName = "telep";
-        let userEmail = "mail23@mk.ri";
-        let userPassword = "1234567";
+        let userName = "EvgenTe";
+        let userEmail = "evgen@telepnev.mail";
+        let userPassword = "qwerty123";
         
         
         await app.mainPage.open(URL);
