@@ -23,7 +23,6 @@ test.describe('Login Users tests', () => {
       });
 
       test('Авторизация существующего пользователя', async ({ page }) => {
-        // todo спрятать данные 
         let userName = oldUser.nameSuperUser;
         let userEmail = oldUser.emailSuperUser; 
         let userPassword = oldUser.passwordSuperUser;

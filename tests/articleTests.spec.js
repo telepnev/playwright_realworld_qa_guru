@@ -1,64 +1,39 @@
 import { test, expect } from '@playwright/test';
-import { faker } from '@faker-js/faker';
-import { randomInt } from 'crypto';
-import { MainPage, LoginPage, ArticlePage, ProfilePage} from '../src/pages/index';
+import { ArticleBuilder, UserBuilder } from '../src/helpers/index';
+import { App } from '../src/pages/index';
 
 
 const URL = 'https://realworld.qa.guru/#/';
 let articleHelper;
+let app;
+let newUser;
+let oldUser;
+let newArticle;
 
-test.describe.skip('Article tests', () => {
+test.describe('Article tests', () => {
     test.beforeEach('Create User', async ({ page }) => {
-      // todo перенести в отдельный класс
-      const userName = "telep";
-      const userEmail = "mail23@mk.ri";
-      const userPassword = "1234567";
-      const mainPage = new MainPage(page);
-      const loginPage = new LoginPage(page);
+      
+      app = new App(page);
+      newUser = new UserBuilder().addName().addEmail().addUserPassword().generate();
+      oldUser = new UserBuilder().addEmailSuperUser().addPasswordSuperUser().addNameSuperUser().generate();
+
+      newArticle = new ArticleBuilder().addTitle().addArticleAbout().addArticleBody().addTag().generate();
         
-      await mainPage.open(URL);
-      await mainPage.goToAuthorization();
-      await loginPage.authorizationUser(userEmail, userPassword);
-
-       // await expect(page.getByRole('navigation')).toContainText(userName);
-
-      // todo перенести в отдельный класс
-        articleHelper = {
-            articleTitle : faker.food.dish(),
-            articleAbout : faker.food.ethnicCategory(),
-            writeArticle : faker.food.description(),
-            newArticleTitle : faker.food.dish(),
-            newArticleAbout : faker.food.ethnicCategory(),
-            newArticleWRite : faker.food.description(),
-
-            getTag : () => {
-                const tags = ["AngelWings","Baklava","Bánh","BánhBao",
-                    "BánhCăn","Sbiten","Okroshka","Semolinaporridge",
-                    "Kalitki","Kalach","FishRasstegai"]
-                let ruslt = tags[randomInt(10)]
-                return ruslt;
-            }
-        };
+      await app.mainPage.open(URL);
+      await app.mainPage.goToAuthorization();
+      await app.loginPage.authorizationUser(oldUser.emailSuperUser, oldUser.passwordSuperUser);
 
       });
     
 
       test('Создание новой статьи', async ({ page }) => {
-       
-        const createTitle = articleHelper.articleTitle;
-        const createArticleAbout = articleHelper.articleAbout;
-        const createWriteArticle = articleHelper.writeArticle;
-        const createTags = articleHelper.getTag();
+  
+        await app.mainPage.goToNewArticle();
+        await app.articlePage.createArticle(newArticle.articleTitle, newArticle.articleAbout, newArticle.writeArticle, newArticle.tags);
 
-        const mainPage = new MainPage(page);
-        const articlePage = new ArticlePage(page);
-
-        await mainPage.goToNewArticle();
-        await articlePage.createArticle(createTitle, createArticleAbout, createWriteArticle, createTags);
-
-        await expect(page.getByRole('heading')).toContainText(createTitle);
-        await expect(page.locator(".article-content")).toContainText(createWriteArticle);
-        await expect(page.locator(".tag-list")).toContainText(createTags);
+        await expect(page.getByRole('heading')).toContainText(newArticle.articleTitle);
+        await expect(page.locator(".article-content")).toContainText(newArticle.writeArticle);
+        await expect(page.locator(".tag-list")).toContainText(newArticle.tags);
 
       });
 

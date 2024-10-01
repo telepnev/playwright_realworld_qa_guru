@@ -17,13 +17,7 @@ export class ArticleBuilder {
     }
 
     addTag() {
-        this.getTag = () => {
-            const tags = ["AngelWings","Baklava","Bánh","BánhBao",
-                "BánhCăn","Sbiten","Okroshka","Semolinaporridge",
-                "Kalitki","Kalach","FishRasstegai"]
-            let result = tags[randomInt(10)]
-            return result;
-        }
+        this.tags = faker.person.firstName();
         return this;
     }
 
@@ -32,7 +26,7 @@ export class ArticleBuilder {
             articleTitle : this.articleTitle,
             articleAbout : this.articleAbout,
             writeArticle : this.writeArticle,
-            getTag : this.getTag
+            tags : this.tags
         });
         return copied;
     }
