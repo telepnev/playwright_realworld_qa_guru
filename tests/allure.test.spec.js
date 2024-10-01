@@ -90,4 +90,20 @@ test.describe.only('Login Users tests', () => {
         await expect(page.locator('.error-messages')).toContainText(wrongMessage);
       });
 
+      test('гиттт', async ({ page }) => {
+        app = new App(page);
+        const wrongMessage = "Email not found sign in first";
+        const userEmail = "mail23@mk1123123213123213131312.ri";
+        const userPassword = "123456798797979";
+        
+
+        await app.mainPage.open(URL);
+        await app.mainPage.goToAuthorization();
+        await app.loginPage.authorizationUser(userEmail, userPassword);
+
+        await expect(page.locator('.error-messages')).toContainText(wrongMessage);
+      });
+
+
+
     });
