@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test';
-import { faker } from '@faker-js/faker';
 import { UserBuilder } from '../src/helpers/index';
 import { App } from '../src/pages/index';
 
