@@ -152,6 +152,28 @@ test.describe.skip('Article tests', () => {
         await expect(page.locator('.row').nth(1)).toContainText(commitMesege);
    
       });
+
+
+      test('удалить после слияния', async ({ page }) => {
+        const tag = 'реклама';
+        const commitMesege = articleHelper.writeArticle;
+        const mainPage = new MainPage(page);
+        const profilePage = new ProfilePage(page)
+
+        await mainPage.goToHome();
+        await mainPage.getTagByName(tag);
+        await mainPage.clickOnAuthorButton();
+
+        //await page.locator('//a[@class="author"]').click();
+        await page.locator('.preview-link').click();
+        
+        await page.getByPlaceholder('Write a comment...').click();
+        await page.getByPlaceholder('Write a comment...').fill(commitMesege);
+        await page.getByRole('button', { name : 'Post Comment'}).click()
+
+        await expect(page.locator('.row').nth(1)).toContainText(commitMesege);
+   
+      });
       
 
     });
