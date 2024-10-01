@@ -8,7 +8,7 @@ let app;
 let newUser;
 let oldUser;
 
-test.describe.only('Login Users tests', () => {
+test.describe('Login Users tests', () => {
     test.beforeEach('Create User', async ({ page }) => {
       app = new App(page);
       newUser = new UserBuilder().addName().addEmail().addUserPassword().generate();
@@ -21,8 +21,6 @@ test.describe.only('Login Users tests', () => {
            await allure.feature("Authentication new User");
            await allure.story("Authentication");
 
-           //await allure.step("Вводим Имя пользователя, Email, Password", async () => {
-          //});
                 await app.mainPage.open(URL);
                 await app.mainPage.goToRegister();
                 await app.registerPage.registerNewUser(newUser.userName, newUser.userEmail ,newUser.userPassword);

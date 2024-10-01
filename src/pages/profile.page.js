@@ -1,4 +1,5 @@
 import { BasePage } from "./base.page";
+import { allure } from "allure-playwright";
 
 
 export class ProfilePage extends BasePage{
@@ -9,6 +10,8 @@ export class ProfilePage extends BasePage{
     }
 
     async toFollow() {
+        await allure.step("Подписаться на автора статьи", async () => { 
         await this.followButton.click();
+    });
     }
 }

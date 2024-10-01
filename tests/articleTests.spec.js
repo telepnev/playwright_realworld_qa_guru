@@ -4,15 +4,15 @@ import { App } from '../src/pages/index';
 
 
 
+
 const URL = 'https://realworld.qa.guru/#/';
-let articleHelper;
 let app;
 let newUser;
 let oldUser;
 let newArticle;
 let upDateArticle;
 
-test.describe.skip('Article tests', () => {
+test.describe('Article tests', () => {
     test.beforeEach('Create User', async ({ page }) => {
       
       app = new App(page);
@@ -35,7 +35,7 @@ test.describe.skip('Article tests', () => {
         await app.articlePage.createArticle(newArticle.articleTitle, newArticle.articleAbout,
            newArticle.writeArticle, newArticle.tags);
 
-        await expect(page.getByRole('heading')).toContainText(newArticle.articleTitle);
+        await expect(page.locator('.banner h1')).toContainText(newArticle.articleTitle);
         await expect(page.locator(".article-content")).toContainText(newArticle.writeArticle);
         await expect(page.locator(".tag-list")).toContainText(newArticle.tags);
 
@@ -49,9 +49,9 @@ test.describe.skip('Article tests', () => {
 
         await app.articlePage.toEditArticleButton();
         await app.articlePage.editArticle(upDateArticle.articleTitle, upDateArticle.articleAbout,
-          upDateArticle.writeArticle, upDateArticle.tags);
-          await expect(page.getByRole('heading')).toContainText(upDateArticle.articleTitle);
-          await expect(page.locator(".article-page")).toContainText(upDateArticle.writeArticle);
+          upDateArticle.writeArticle);
+          await expect(page.locator('.banner h1')).toContainText(upDateArticle.articleTitle);
+          await expect(page.locator('.container p')).toContainText(upDateArticle.writeArticle);
        
       
       });
