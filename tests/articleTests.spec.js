@@ -9,6 +9,7 @@ let app;
 let newUser;
 let oldUser;
 let newArticle;
+let upDateArticle;
 
 test.describe('Article tests', () => {
     test.beforeEach('Create User', async ({ page }) => {
@@ -18,6 +19,7 @@ test.describe('Article tests', () => {
       oldUser = new UserBuilder().addEmailSuperUser().addPasswordSuperUser().addNameSuperUser().generate();
 
       newArticle = new ArticleBuilder().addTitle().addArticleAbout().addArticleBody().addTag().generate();
+      upDateArticle = new ArticleBuilder().addTitle().addArticleAbout().addArticleBody().addTag().generate();
         
       await app.mainPage.open(URL);
       await app.mainPage.goToAuthorization();
@@ -29,7 +31,8 @@ test.describe('Article tests', () => {
       test('Создание новой статьи', async ({ page }) => {
   
         await app.mainPage.goToNewArticle();
-        await app.articlePage.createArticle(newArticle.articleTitle, newArticle.articleAbout, newArticle.writeArticle, newArticle.tags);
+        await app.articlePage.createArticle(newArticle.articleTitle, newArticle.articleAbout,
+           newArticle.writeArticle, newArticle.tags);
 
         await expect(page.getByRole('heading')).toContainText(newArticle.articleTitle);
         await expect(page.locator(".article-content")).toContainText(newArticle.writeArticle);
@@ -39,24 +42,16 @@ test.describe('Article tests', () => {
 
       test('Редактирование статьи после ее создания', async ({ page }) => {
        
-        const title = articleHelper.articleTitle;
-        const articleAbout = articleHelper.articleAbout;
-        const writeArticle = articleHelper.writeArticle;
-        const tags = articleHelper.getTag();
+        await app.mainPage.goToNewArticle();
+        await app.articlePage.createArticle(newArticle.articleTitle, newArticle.articleAbout,
+           newArticle.writeArticle, newArticle.tags);
 
-        const newTitle = articleHelper.newArticleTitle;
-        const newArticleAbout = articleHelper.newArticleAbout;
-        const newWriteArticle = articleHelper.newArticleWRite;
-
-        const mainPage = new MainPage(page);
-        const articlePage = new ArticlePage(page);
-
-        await mainPage.goToNewArticle();
-        await articlePage.createArticle(title, articleAbout, writeArticle, tags);
-
-        await articlePage.toEditArticleButton();
-        await articlePage.editArticle(newTitle, newArticleAbout, newWriteArticle);
-        await expect(page.getByRole('heading')).toContainText(newTitle);
+        await app.articlePage.toEditArticleButton();
+        await app.articlePage.editArticle(upDateArticle.articleTitle, upDateArticle.articleAbout,
+          upDateArticle.writeArticle, upDateArticle.tags);
+          await expect(page.getByRole('heading')).toContainText(upDateArticle.articleTitle);
+          await expect(page.locator(".article-page")).toContainText(upDateArticle.writeArticle);
+       
       
       });
 
