@@ -7,3 +7,16 @@ allure-results/
 /playwright/.cache/
 
 .idea
+allure-report/index.html
+allure-report/data/behaviors.csv
+allure-report/data/behaviors.json
+allure-report/data/categories.json
+allure-report/data/packages.json
+allure-report/data/suites.csv
+allure-report/data/suites.json
+allure-report/data/timeline.json
+allure-report/export/influxDbData.txt
+allure-report/history/history.json
+allure-report/widgets/duration.json
+allure-report/widgets/severity.json
+allure-report/widgets/status-chart.json
